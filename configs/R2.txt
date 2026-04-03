@@ -1,15 +1,78 @@
-🔹 Router R2 (Remote Site Routing)
+========================
+R2 CONFIGURATION
+========================
 
-Role:
+Hostname:
+hostname R2
 
-Provides routing for remote VLANs
-Participates in OSPF
+----------------------------------------
+DHCP Configuration
+----------------------------------------
+- Provides IP addresses for remote VLANs
+
+ip dhcp excluded-address 192.168.110.1
+ip dhcp excluded-address 192.168.120.1
+ip dhcp excluded-address 192.168.130.1
+
+ip dhcp pool VLAN10
+ network 192.168.110.0 255.255.255.0
+ default-router 192.168.110.1
+ dns-server 8.8.8.8
+
+ip dhcp pool VLAN20
+ network 192.168.120.0 255.255.255.0
+ default-router 192.168.120.1
+ dns-server 8.8.8.8
+
+ip dhcp pool VLAN30
+ network 192.168.130.0 255.255.255.0
+ default-router 192.168.130.1
+ dns-server 8.8.8.8
+
+----------------------------------------
+Inter-VLAN Routing
+----------------------------------------
+
+interface g0/0/0
+ no ip address
+
 interface g0/0/0.10
+ encapsulation dot1Q 10
  ip address 192.168.110.1 255.255.255.0
 
-👉 Acts as default gateway for remote VLANs.
+interface g0/0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.120.1 255.255.255.0
+
+interface g0/0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.130.1 255.255.255.0
+
+----------------------------------------
+Router Link (R2 ↔ R1)
+----------------------------------------
+
+interface g0/0/1
+ ip address 10.0.0.2 255.255.255.252
+
+----------------------------------------
+OSPF Configuration
+----------------------------------------
 
 router ospf 1
  network 192.168.110.0 0.0.0.255 area 0
+ network 192.168.120.0 0.0.0.255 area 0
+ network 192.168.130.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
 
-👉 Advertises remote networks to R1.
+----------------------------------------
+SSH Configuration
+----------------------------------------
+
+ip domain-name lab.local
+ip ssh version 2
+username admin secret <encrypted>
+
+line vty 0 4
+ login local
+ transport input ssh
