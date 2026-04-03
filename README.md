@@ -39,22 +39,50 @@ This lab demonstrates Layer 2 and Layer 3 networking concepts including VLAN seg
 
 ---
 
+## 🔍 Key Design Decisions
 
-## 📁 Lab File
-
-Download and open the Packet Tracer file:
-
-[Download Lab](./deeper-network-lab.pkt)
+- VLAN segmentation used to isolate departments (HR, IT, Guest) and reduce broadcast domains
+- OSPF chosen for scalability and dynamic routing between sites
+- ACL implemented to restrict HR → IT traffic for security compliance
+- Management VLAN used to separate administrative access from user traffic
+- SSH configured with access-class to limit remote access to trusted networks only
 
 ---
 
-## 🚀 Key Takeaways
+## Key Takeaways
 
 * Implemented scalable enterprise network design
 * Applied segmentation using VLANs and ACLs
 * Secured management access using SSH + ACL restrictions
 * Demonstrated dynamic routing with OSPF
 * Built and validated full end-to-end connectivity
+
+---
+
+## 🖧 Network Topology Explanation
+
+- R1 and R2 act as distribution routers
+- Each router connects to a local access switch (SW1, SW2)
+- Trunk links carry VLAN traffic between switches and routers
+- A point-to-point link (10.0.0.0/30) enables OSPF routing between routers
+
+---
+
+## 🏢 Real-World Scenario
+
+This lab simulates a multi-department enterprise network where:
+- HR, IT, and Guest users are segmented via VLANs
+- Traffic between departments is controlled via ACLs
+- Routing between sites is handled dynamically using OSPF
+- Secure remote management is enforced using SSH
+
+---
+
+## 📁 Lab File
+
+Download and open the Packet Tracer file:
+
+[Download Lab](./deeper-network-lab.pkt)
 
 ---
 
