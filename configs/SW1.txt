@@ -1,24 +1,56 @@
-🔹 Switch SW1 (Access Layer + Management VLAN)
+========================
+SW1 CONFIGURATION
+========================
 
-Role:
+Hostname:
+hostname SW1
 
-- VLAN segmentation
-- Trunking to router
-- Management VLAN
+----------------------------------------
+VLAN Access Ports
+----------------------------------------
+- Assigns devices to VLANs
 
 interface fa0/1
  switchport mode access
  switchport access vlan 10
 
-👉 Assigns end devices to VLANs.
+interface fa0/2
+ switchport mode access
+ switchport access vlan 20
+
+interface fa0/3
+ switchport mode access
+ switchport access vlan 30
+
+interface fa0/10
+ switchport mode access
+ switchport access vlan 99
+
+----------------------------------------
+Trunk Configuration
+----------------------------------------
+- Connects switch to router carrying multiple VLANs
 
 interface fa0/24
  switchport mode trunk
  switchport trunk allowed vlan 10,20,30,99
 
-👉 Carries multiple VLANs to router (router-on-a-stick).
+----------------------------------------
+Management VLAN
+----------------------------------------
+- Allows remote management of switch
 
 interface vlan 99
  ip address 192.168.99.2 255.255.255.0
 
-👉 Enables remote management of switch.
+----------------------------------------
+SSH Configuration
+----------------------------------------
+
+ip domain-name lab.local
+ip ssh version 2
+username admin secret <encrypted>
+
+line vty 0 4
+ login local
+ transport input ssh
