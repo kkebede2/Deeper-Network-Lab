@@ -44,7 +44,7 @@ This lab demonstrates Layer 2 and Layer 3 networking concepts including VLAN seg
 
 Download and open the Packet Tracer file:
 
-
+[Download Lab](./deeper-network-lab.pkt)
 
 ---
 
