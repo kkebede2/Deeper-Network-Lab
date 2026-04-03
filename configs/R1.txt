@@ -1,18 +1,48 @@
-🔹 Router R1 (Core Services & Routing)
+========================
+R1 CONFIGURATION
+========================
 
-Role:
+Hostname:
+- Identifies the device as R1 in the network
+hostname R1
 
-Inter-VLAN routing (router-on-a-stick)
-DHCP server for VLANs
-OSPF routing
-Security enforcement (ACL + SSH)
+----------------------------------------
+DHCP Configuration
+----------------------------------------
+- Provides automatic IP addressing for VLANs 10, 20, and 30
+- Excludes gateway addresses from assignment
 
-Key Configuration:
+ip dhcp excluded-address 192.168.10.1
+ip dhcp excluded-address 192.168.20.1
+ip dhcp excluded-address 192.168.30.1
 
-! Inter-VLAN Routing
+ip dhcp pool VLAN10
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+
+ip dhcp pool VLAN20
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+
+ip dhcp pool VLAN30
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 8.8.8.8
+
+----------------------------------------
+Inter-VLAN Routing (Router-on-a-Stick)
+----------------------------------------
+- Uses subinterfaces to route between VLANs
+
+interface g0/0/0
+ no ip address
+
 interface g0/0/0.10
  encapsulation dot1Q 10
  ip address 192.168.10.1 255.255.255.0
+ ip access-group 100 in
 
 interface g0/0/0.20
  encapsulation dot1Q 20
@@ -22,33 +52,54 @@ interface g0/0/0.30
  encapsulation dot1Q 30
  ip address 192.168.30.1 255.255.255.0
 
-👉 Enables communication between VLANs using subinterfaces.
+interface g0/0/0.99
+ encapsulation dot1Q 99
+ ip address 192.168.99.1 255.255.255.0
 
-! DHCP Configuration
-ip dhcp pool VLAN10
- network 192.168.10.0 255.255.255.0
- default-router 192.168.10.1
+----------------------------------------
+Point-to-Point Link (R1 ↔ R2)
+----------------------------------------
+- Used for OSPF routing between routers
 
-👉 Automatically assigns IP addresses to hosts in each VLAN.
+interface g0/0/1
+ ip address 10.0.0.1 255.255.255.252
 
-! OSPF Routing
+----------------------------------------
+OSPF Routing
+----------------------------------------
+- Dynamically shares routes between routers
+
 router ospf 1
  network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 192.168.30.0 0.0.0.255 area 0
  network 10.0.0.0 0.0.0.3 area 0
 
-👉 Allows dynamic routing between R1 and R2.
+----------------------------------------
+ACL (Traffic Segmentation)
+----------------------------------------
+- Blocks VLAN 10 from accessing VLAN 20
 
-! ACL (Traffic Control)
 access-list 100 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
 access-list 100 permit ip any any
 
-👉 Blocks HR (VLAN 10) from accessing IT (VLAN 20).
+----------------------------------------
+SSH Configuration
+----------------------------------------
+- Enables secure remote access
 
-! SSH Security (Management VLAN Only)
+ip domain-name lab.local
+ip ssh version 2
+username admin secret <encrypted>
+
+----------------------------------------
+Management Access Control
+----------------------------------------
+- Only allows VLAN 99 to SSH into device
+
 access-list 10 permit 192.168.99.0 0.0.0.255
 
 line vty 0 4
  access-class 10 in
+ login local
  transport input ssh
-
-👉 Restricts device access to management VLAN only.
