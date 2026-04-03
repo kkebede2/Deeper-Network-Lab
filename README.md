@@ -61,25 +61,25 @@ Download and open the Packet Tracer file:
 ## 📸 Screenshots
 
 ### 🖥️ Network Topology
-![Topology](./screenshots/topology.png)
+[Topology](./screenshots/topology.png)
 
 ### 🔀 VLAN Configuration
-![VLAN](./screenshots/vlan-config.png)
+[VLAN](./screenshots/vlan-config.png)
 
 ### 🔗 Trunking
-![Trunk](./screenshots/trunk.png)
+[Trunk](./screenshots/trunk.png)
 
 ### 🌐 OSPF Routing
-![OSPF](./screenshots/ospf-routing.png)
+[OSPF](./screenshots/ospf-routing.png)
 
 ### ✅ Inter-VLAN Communication
-![InterVLAN](./screenshots/intervlan-success.png)
+[InterVLAN](./screenshots/intervlan-success.png)
 
 ### ❌ ACL Blocking
-![ACL](./screenshots/acl-block.png)
+[ACL](./screenshots/acl-block.png)
 
 ### 🔐 SSH Access
-![SSH](./screenshots/ssh-success.png)
+[SSH](./screenshots/ssh-success.png)
 
 ### 🛠️ Management VLAN
-![Mgmt](./screenshots/management-vlan.png)
+[Mgmt](./screenshots/management-vlan.png)
