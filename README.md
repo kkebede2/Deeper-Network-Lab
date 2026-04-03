@@ -56,3 +56,7 @@ Download and open the Packet Tracer file:
 * Demonstrated dynamic routing with OSPF
 * Built and validated full end-to-end connectivity
 
+---
+
+## ⚙️ Configuration Breakdown
+...
