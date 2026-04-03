@@ -1,0 +1,42 @@
+========================
+SW2 CONFIGURATION
+========================
+
+Hostname:
+hostname SW2
+
+----------------------------------------
+VLAN Access Ports
+----------------------------------------
+
+interface fa0/1
+ switchport mode access
+ switchport access vlan 10
+
+interface fa0/2
+ switchport mode access
+ switchport access vlan 20
+
+interface fa0/3
+ switchport mode access
+ switchport access vlan 30
+
+----------------------------------------
+Trunk Configuration
+----------------------------------------
+
+interface fa0/24
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+
+----------------------------------------
+SSH Configuration
+----------------------------------------
+
+ip domain-name lab.local
+ip ssh version 2
+username admin secret <encrypted>
+
+line vty 0 4
+ login local
+ transport input ssh
