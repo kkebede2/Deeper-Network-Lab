@@ -56,8 +56,3 @@ Download and open the Packet Tracer file:
 * Demonstrated dynamic routing with OSPF
 * Built and validated full end-to-end connectivity
 
----
-
-## 💼 Resume Highlight
-
-> Designed and implemented a multi-router enterprise network with VLAN segmentation, OSPF routing, DHCP services, ACL-based traffic control, and secure SSH management access.
